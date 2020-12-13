@@ -46,24 +46,24 @@ function readDinos() {
 readDinos();
 
 // Create Human Object
-const HumanObj = function (person, feet, inches, weight, diet) {
+const HumanObj = function (person, height, weight, diet) {
   (this.person = person),
-    (this.feet = feet),
+    (this.height = height),
     (this.inches = inches),
     (this.weight = weight),
     (this.diet = diet);
 };
 
-// Get human data from form
-// TODO: Use IIFE?
-
 let human = new HumanObj();
 
+// Get human data from form
+// TODO: Use IIFE?
 document.getElementById("btn").addEventListener("click", function (e) {
   e.preventDefault();
+  let feet = parseFloat(document.getElementById("feet").value);
+  let inches = parseFloat(document.getElementById("inches").value);
   human.person = document.getElementById("name").value;
-  human.feet = parseFloat(document.getElementById("feet").value);
-  human.inches = parseFloat(document.getElementById("inches").value);
+  human.height = feet * 12 + inches;
   human.weight = parseFloat(document.getElementById("weight").value);
   human.diet = document.getElementById("diet").value;
   console.log(human);
@@ -71,6 +71,7 @@ document.getElementById("btn").addEventListener("click", function (e) {
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
+function compareWeight() {}
 
 // Create Dino Compare Method 2
 // NOTE: Weight in JSON file is in lbs, height in inches.
