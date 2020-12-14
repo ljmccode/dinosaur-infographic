@@ -104,38 +104,38 @@ let dinoMethods = {
 Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
-function generateTiles(dino, human) {
+function generateFact(dino, human) {
   let fact;
-  const randomNumber = Math.floor(Math.random() * 5);
+    //   fact displayed will always be fact for Pigeon
+  const randomNumber = dino.speicies === 'Pigeon' ? 3 : Math.floor(Math.random() * 5);
   switch (randomNumber) {
     case 0:
     // display fact about height
         fact = dino.compareHeight(human.height);
-        break
+        return fact
     case 1:
     // display fact about weight
         fact = dino.compareWeight(human.weight);
-        break
+        return fact
     case 2:
     // display fact about diet
         fact = dino.compareDiet(human.diet)
-        break
+        return fact
     case 3:
     // display fact as fact
         fact = dino.fact;
-        break
+        return fact
     case 4:
     // display when as fact
         fact = `${dino.species} lived in ${dino.where}.`
-        break
+        return fact
     case 5:
     // display where as fact
         fact = `${dino.species} lived in the ${dino.where} period.`
-        break
+        return fact
     default:
       console.log("Dinosaurs!");
   }
-
 }
 
 // Add tiles to DOM
