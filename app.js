@@ -36,12 +36,12 @@ window.onload = async function () {
       )
     );
   });
-  readDinos();
+  addHuman();
 };
 
-// Logs array of dino objects
-function readDinos() {
-  console.log(dinos[0].diet);
+// Inserts Human 
+function addHuman() {
+    dinos.splice(4, 0, ["Human placeholder"])
 }
 
 // Create Human Object
@@ -164,7 +164,7 @@ function createRandomNumber() {
 function createInfographic(dinos, human, randomNumber) {
   const fragment = new DocumentFragment()
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     // will always put human in the center
     let tile =
       i === 4
