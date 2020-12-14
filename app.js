@@ -104,7 +104,7 @@ let dinoMethods = {
 Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
-function generateTile(dino, human, randomNumber) {
+function generateDinoTile(dino, human, randomNumber) {
   let fact;
   //   fact displayed will always be fact for Pigeon
   if (dino.species === "Pigeon") {
@@ -146,24 +146,31 @@ function generateTile(dino, human, randomNumber) {
 }
 
 // function created to generate a human div
-function generateHumanTile() {
+function generateHumanTile(human) {
     const humanDiv = document.createElement('<div>');
     humanDiv.className = 'grid-item';
-    humanDiv.innerHTML = '<h2>Human</h2><img src="images/human.png" alt="human image">'
+    humanDiv.innerHTML = `<h2>${human.person}</h2><img src="images/human.png" alt="human image">`
     
     return humanDiv;
 
 }
 
-function randomNumber() {
+function createRandomNumber() {
   return Math.floor(Math.random() * 5);
 }
 
-let randomNumber = randomNumber();
+let randomNumber = createRandomNumber();
 
 // Add tiles to DOM
-function createInfographic () {
-
+function createInfographic (dinos, human, randomNumber) {
+    let infoHTML;
+    
+    for (let i = 0; i < 9; i++) {
+        // will always put human in the center
+        let tile = i === 4 ? generateHumanTile(human) : generateDinoTile(dinos[i], human, randomNumber);
+        infoHTML += tile
+    }
+    document.getElementById("grid").append(infoHTML);
 }
 
 // Remove form from screen
