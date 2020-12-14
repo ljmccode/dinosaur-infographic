@@ -82,6 +82,17 @@ let dinoMethods = {
     } else {
       return `You weight the same as ${this.species}!`;
     }
+  },
+  compareHeight: function (humanHeight) {
+    let heightDifference = this.height - humanHeight;
+    if (heightDifference > 0) {
+      return `${this.species} is ${heightDifference} inches taller than you!`;
+    } else if (heightDifference < 0) {
+      heightDifference *= -1;
+      return `You are ${heightDifference} inches taller than a ${this.species}!`;
+    } else {
+      return `You are the same height as ${this.species}!`;
+    }
   }
 };
 
