@@ -136,7 +136,7 @@ function generateDinoTile(dino, human, randomNumber) {
     default:
       console.log("Dinosaurs!");
   }
-  const dinoDiv = document.createElement("<div>");
+  const dinoDiv = document.createElement("div");
   dinoDiv.className = "grid-item";
   dinoDiv.innerHTML = `<h2>${
     dino.species
@@ -149,7 +149,7 @@ function generateDinoTile(dino, human, randomNumber) {
 
 // function created to generate a human div
 function generateHumanTile(human) {
-  const humanDiv = document.createElement("<div>");
+  const humanDiv = document.createElement("div");
   humanDiv.className = "grid-item";
   humanDiv.innerHTML = `<h2>${human.person}</h2><img src="images/human.png" alt="human image">`;
 
@@ -162,17 +162,17 @@ function createRandomNumber() {
 
 // Add tiles to DOM
 function createInfographic(dinos, human, randomNumber) {
-  let infoHTML;
+  const fragment = new DocumentFragment()
 
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 8; i++) {
     // will always put human in the center
     let tile =
       i === 4
         ? generateHumanTile(human)
         : generateDinoTile(dinos[i], human, randomNumber);
-    infoHTML += tile;
+    fragment.appendChild(tile)
   }
-  document.getElementById("grid").append(infoHTML);
+  document.getElementById("grid").appendChild(fragment);
 }
 
 // Remove form from screen
@@ -180,6 +180,9 @@ function createInfographic(dinos, human, randomNumber) {
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", function (e) {
   e.preventDefault();
+//   debugger
   document.querySelector("form").style.display = "none";
   let randomNumber = createRandomNumber();
+  let humanInfo = getHumanData();
+  createInfographic(dinos, humanInfo, randomNumber);
 });
