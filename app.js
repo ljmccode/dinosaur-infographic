@@ -136,13 +136,23 @@ function generateTile(dino, human, randomNumber) {
       fact = `${dino.species} lived in the ${dino.where} period.`;
       break
     default:
-      console.log("Dinosaurs!");
+      console.log('Dinosaurs!');
   }
-    const dinoDiv = document.createElement("<div>");
-    dinoDiv.className = "grid-item";
-    dinoDiv.innerHTML = `<h2>${dino.species}</h2><img scr="images/${dino.species.toLowerCase()}.png" alt="${dino.species} image"><p>${fact}</p>`
+    const dinoDiv = document.createElement('<div>');
+    dinoDiv.className = 'grid-item';
+    dinoDiv.innerHTML = `<h2>${dino.species}</h2><img src="images/${dino.species.toLowerCase()}.png" alt="${dino.species} image"><p>${fact}</p>`
 
     return dinoDiv;
+}
+
+// function created to generate a human div
+function generateHumanTile() {
+    const humanDiv = document.createElement('<div>');
+    humanDiv.className = 'grid-item';
+    humanDiv.innerHTML = '<h2>Human</h2><img src="images/human.png" alt="human image">'
+    
+    return humanDiv;
+
 }
 
 function randomNumber() {
@@ -152,6 +162,9 @@ function randomNumber() {
 let randomNumber = randomNumber();
 
 // Add tiles to DOM
+function createInfographic () {
+
+}
 
 // Remove form from screen
 
