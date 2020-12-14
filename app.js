@@ -36,20 +36,18 @@ window.onload = async function () {
       )
     );
   });
+  readDinos();
 };
 
 // Logs array of dino objects
 function readDinos() {
-  console.log(dinos);
+  console.log(dinos[0].diet);
 }
-
-readDinos();
 
 // Create Human Object
 const HumanObj = function (person, height, weight, diet) {
   (this.person = person),
     (this.height = height),
-    (this.inches = inches),
     (this.weight = weight),
     (this.diet = diet);
 };
@@ -92,20 +90,53 @@ let dinoMethods = {
     } else {
       return `You are the same height as ${this.species}!`;
     }
-  }, 
-  compareDiet: function(humanDiet) {
-      if (this.diet === humanDiet) {
-          return `You have the same diet as a ${this.species}`
-      } else {
-          return `The ${this.species} is a ${this.diet}`
-      }
-  }
+  },
+  compareDiet: function (humanDiet) {
+    if (this.diet === humanDiet) {
+      return `You have the same diet as a ${this.species}!`;
+    } else {
+      return `The ${this.species} is a ${this.diet}`;
+    }
+  },
 };
 
 // Adds the DinoMethod object with comparison methods as a prototype to the Dino constructor
 Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
+function generateTiles(dino, human) {
+  let fact;
+  const randomNumber = Math.floor(Math.random() * 5);
+  switch (randomNumber) {
+    case 0:
+    // display fact about height
+        fact = dino.compareHeight(human.height);
+        break
+    case 1:
+    // display fact about weight
+        fact = dino.compareWeight(human.weight);
+        break
+    case 2:
+    // display fact about diet
+        fact = dino.compareDiet(human.diet)
+        break
+    case 3:
+    // display fact as fact
+        fact = dino.fact;
+        break
+    case 4:
+    // display when as fact
+        fact = `${dino.species} lived in ${dino.where}.`
+        break
+    case 5:
+    // display where as fact
+        fact = `${dino.species} lived in the ${dino.where} period.`
+        break
+    default:
+      console.log("Dinosaurs!");
+  }
+
+}
 
 // Add tiles to DOM
 
