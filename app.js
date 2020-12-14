@@ -52,20 +52,18 @@ const HumanObj = function (person, height, weight, diet) {
     (this.diet = diet);
 };
 
-let human = new HumanObj();
+// Function that creates new human object from form data
+function getHumanData() {
+  let human = new HumanObj();
 
-// Get human data from form
-// TODO: Use IIFE?
-document.getElementById("btn").addEventListener("click", function (e) {
-  e.preventDefault();
   let feet = parseFloat(document.getElementById("feet").value);
   let inches = parseFloat(document.getElementById("inches").value);
   human.person = document.getElementById("name").value;
   human.height = feet * 12 + inches;
   human.weight = parseFloat(document.getElementById("weight").value);
   human.diet = document.getElementById("diet").value;
-  console.log(human);
-});
+  return human;
+}
 
 // Creates a object with 3 comparison methods
 let dinoMethods = {
@@ -114,65 +112,74 @@ function generateDinoTile(dino, human, randomNumber) {
     case 0:
       // display fact about height
       fact = dino.compareHeight(human.height);
-      break
+      break;
     case 1:
       // display fact about weight
       fact = dino.compareWeight(human.weight);
-      break
+      break;
     case 2:
       // display fact about diet
       fact = dino.compareDiet(human.diet);
-      break
+      break;
     case 3:
       // display fact as fact
       fact = dino.fact;
-      break
+      break;
     case 4:
       // display when as fact
       fact = `${dino.species} lived in ${dino.where}.`;
-      break
+      break;
     case 5:
       // display where as fact
       fact = `${dino.species} lived in the ${dino.where} period.`;
-      break
+      break;
     default:
-      console.log('Dinosaurs!');
+      console.log("Dinosaurs!");
   }
-    const dinoDiv = document.createElement('<div>');
-    dinoDiv.className = 'grid-item';
-    dinoDiv.innerHTML = `<h2>${dino.species}</h2><img src="images/${dino.species.toLowerCase()}.png" alt="${dino.species} image"><p>${fact}</p>`
+  const dinoDiv = document.createElement("<div>");
+  dinoDiv.className = "grid-item";
+  dinoDiv.innerHTML = `<h2>${
+    dino.species
+  }</h2><img src="images/${dino.species.toLowerCase()}.png" alt="${
+    dino.species
+  } image"><p>${fact}</p>`;
 
-    return dinoDiv;
+  return dinoDiv;
 }
 
 // function created to generate a human div
 function generateHumanTile(human) {
-    const humanDiv = document.createElement('<div>');
-    humanDiv.className = 'grid-item';
-    humanDiv.innerHTML = `<h2>${human.person}</h2><img src="images/human.png" alt="human image">`
-    
-    return humanDiv;
+  const humanDiv = document.createElement("<div>");
+  humanDiv.className = "grid-item";
+  humanDiv.innerHTML = `<h2>${human.person}</h2><img src="images/human.png" alt="human image">`;
 
+  return humanDiv;
 }
 
 function createRandomNumber() {
   return Math.floor(Math.random() * 5);
 }
 
-let randomNumber = createRandomNumber();
-
 // Add tiles to DOM
-function createInfographic (dinos, human, randomNumber) {
-    let infoHTML;
-    
-    for (let i = 0; i < 9; i++) {
-        // will always put human in the center
-        let tile = i === 4 ? generateHumanTile(human) : generateDinoTile(dinos[i], human, randomNumber);
-        infoHTML += tile
-    }
-    document.getElementById("grid").append(infoHTML);
+function createInfographic(dinos, human, randomNumber) {
+  let infoHTML;
+
+  for (let i = 0; i < 9; i++) {
+    // will always put human in the center
+    let tile =
+      i === 4
+        ? generateHumanTile(human)
+        : generateDinoTile(dinos[i], human, randomNumber);
+    infoHTML += tile;
+  }
+  document.getElementById("grid").append(infoHTML);
 }
 
 // Remove form from screen
 
 // On button click, prepare and display infographic
+document.getElementById("btn").addEventListener("click", function (e) {
+  e.preventDefault();
+  document.querySelector("form").style.display = "none";
+  let randomNumber = createRandomNumber();
+});
