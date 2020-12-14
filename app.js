@@ -104,39 +104,52 @@ let dinoMethods = {
 Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
-function generateFact(dino, human) {
+function generateTile(dino, human, randomNumber) {
   let fact;
-    //   fact displayed will always be fact for Pigeon
-  const randomNumber = dino.speicies === 'Pigeon' ? 3 : Math.floor(Math.random() * 5);
+  //   fact displayed will always be fact for Pigeon
+  if (dino.species === "Pigeon") {
+    randomNumber = 3;
+  }
   switch (randomNumber) {
     case 0:
-    // display fact about height
-        fact = dino.compareHeight(human.height);
-        return fact
+      // display fact about height
+      fact = dino.compareHeight(human.height);
+      break
     case 1:
-    // display fact about weight
-        fact = dino.compareWeight(human.weight);
-        return fact
+      // display fact about weight
+      fact = dino.compareWeight(human.weight);
+      break
     case 2:
-    // display fact about diet
-        fact = dino.compareDiet(human.diet)
-        return fact
+      // display fact about diet
+      fact = dino.compareDiet(human.diet);
+      break
     case 3:
-    // display fact as fact
-        fact = dino.fact;
-        return fact
+      // display fact as fact
+      fact = dino.fact;
+      break
     case 4:
-    // display when as fact
-        fact = `${dino.species} lived in ${dino.where}.`
-        return fact
+      // display when as fact
+      fact = `${dino.species} lived in ${dino.where}.`;
+      break
     case 5:
-    // display where as fact
-        fact = `${dino.species} lived in the ${dino.where} period.`
-        return fact
+      // display where as fact
+      fact = `${dino.species} lived in the ${dino.where} period.`;
+      break
     default:
       console.log("Dinosaurs!");
   }
+    const dinoDiv = document.createElement("<div>");
+    dinoDiv.className = "grid-item";
+    dinoDiv.innerHTML = `<h2>${dino.species}</h2><img scr="images/${dino.species.toLowerCase()}.png" alt="${dino.species} image"><p>${fact}</p>`
+
+    return dinoDiv;
 }
+
+function randomNumber() {
+  return Math.floor(Math.random() * 5);
+}
+
+let randomNumber = randomNumber();
 
 // Add tiles to DOM
 
