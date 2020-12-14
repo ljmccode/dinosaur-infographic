@@ -69,8 +69,7 @@ document.getElementById("btn").addEventListener("click", function (e) {
   console.log(human);
 });
 
-// Create Dino Compare Method 1
-// NOTE: Weight in JSON file is in lbs, height in inches.
+// Creates a object with 3 comparison methods
 let dinoMethods = {
   compareWeight: function (humanWeight) {
     let weightDifference = this.weight - humanWeight;
@@ -93,14 +92,18 @@ let dinoMethods = {
     } else {
       return `You are the same height as ${this.species}!`;
     }
+  }, 
+  compareDiet: function(humanDiet) {
+      if (this.diet === humanDiet) {
+          return `You have the same diet as a ${this.species}`
+      } else {
+          return `The ${this.species} is a ${this.diet}`
+      }
   }
 };
 
-// Create Dino Compare Method 2
-// NOTE: Weight in JSON file is in lbs, height in inches.
-
-// Create Dino Compare Method 3
-// NOTE: Weight in JSON file is in lbs, height in inches.
+// Adds the DinoMethod object with comparison methods as a prototype to the Dino constructor
+Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
 
