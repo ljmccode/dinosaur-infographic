@@ -161,6 +161,18 @@ select {
     transition: ease 0.3s all;
 }
 
+.retry {
+    display: inline-block;
+    background: #ccc;
+    padding: 0.8em;
+    /* margin: 1.2em auto; */
+    transition: ease 0.3s all;
+}
+
+.hide {
+    display: none;
+}
+
 #btn:hover {
     background: #777;
     color: #fff;

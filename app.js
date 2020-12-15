@@ -39,9 +39,9 @@ window.onload = async function () {
   addHuman();
 };
 
-// Inserts Human 
+// Inserts Human
 function addHuman() {
-    dinos.splice(4, 0, ["Human placeholder"])
+  dinos.splice(4, 0, ["Human placeholder"]);
 }
 
 // Create Human Object
@@ -93,7 +93,7 @@ let dinoMethods = {
     if (this.diet === humanDiet) {
       return `You have the same diet as a ${this.species}!`;
     } else {
-      return `The ${this.species} is a ${this.diet}`;
+      return `The ${this.species} is a ${this.diet} and you are a ${humanDiet}`;
     }
   },
 };
@@ -138,9 +138,9 @@ function generateDinoTile(dino, human, randomNumber) {
   }
   const dinoDiv = document.createElement("div");
   dinoDiv.className = "grid-item";
-  dinoDiv.innerHTML = `<h2>${
+  dinoDiv.innerHTML = `<h3>${
     dino.species
-  }</h2><img src="images/${dino.species.toLowerCase()}.png" alt="${
+  }</h3><img src="images/${dino.species.toLowerCase()}.png" alt="${
     dino.species
   } image"><p>${fact}</p>`;
 
@@ -151,7 +151,7 @@ function generateDinoTile(dino, human, randomNumber) {
 function generateHumanTile(human) {
   const humanDiv = document.createElement("div");
   humanDiv.className = "grid-item";
-  humanDiv.innerHTML = `<h2>${human.person}</h2><img src="images/human.png" alt="human image">`;
+  humanDiv.innerHTML = `<h3>${human.person}</h3><img src="images/human.png" alt="human image">`;
 
   return humanDiv;
 }
@@ -162,7 +162,7 @@ function createRandomNumber() {
 
 // Add tiles to DOM
 function createInfographic(dinos, human, randomNumber) {
-  const fragment = new DocumentFragment()
+  const fragment = new DocumentFragment();
 
   for (let i = 0; i < 9; i++) {
     // will always put human in the center
@@ -170,18 +170,16 @@ function createInfographic(dinos, human, randomNumber) {
       i === 4
         ? generateHumanTile(human)
         : generateDinoTile(dinos[i], human, randomNumber);
-    fragment.appendChild(tile)
+    fragment.appendChild(tile);
   }
   document.getElementById("grid").appendChild(fragment);
 }
 
-// Remove form from screen
-
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", function (e) {
   e.preventDefault();
-//   debugger
   document.querySelector("form").style.display = "none";
+  document.querySelector(".retry").classList.remove("hide");
   let randomNumber = createRandomNumber();
   let humanInfo = getHumanData();
   createInfographic(dinos, humanInfo, randomNumber);
