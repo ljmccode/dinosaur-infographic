@@ -173,7 +173,12 @@ select {
     display: none;
 }
 
-#btn:hover {
+#no-name, #no-height, #no-weight {
+    color: red;
+    margin-top: .5em;
+}
+
+#btn:hover, .retry:hover{
     background: #777;
     color: #fff;
     cursor: pointer;

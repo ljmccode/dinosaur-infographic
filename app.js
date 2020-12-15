@@ -16,11 +16,10 @@ const getDinoData = async () => {
   return data.Dinos;
 };
 
-// Create Dino Objects
-
 // Empty array for dino objects
 const dinos = [];
 
+// Create Dino Objects
 window.onload = async function () {
   const dinoArr = await getDinoData();
   dinoArr.forEach((dino) => {
@@ -46,10 +45,10 @@ function addHuman() {
 
 // Create Human Object
 const HumanObj = function (person, height, weight, diet) {
-  (this.person = person),
-    (this.height = height),
-    (this.weight = weight),
-    (this.diet = diet);
+  this.person = person,
+  this.height = height,
+  this.weight = weight,
+  this.diet = diet;
 };
 
 // Function that creates new human object from form data
@@ -63,6 +62,25 @@ function getHumanData() {
   human.weight = parseFloat(document.getElementById("weight").value);
   human.diet = document.getElementById("diet").value;
   return human;
+}
+
+// Form Validation
+// Displays form errors for each input if not filled out
+function formValidation(human) {
+    let isValid = true;
+    if (human.person === '') {
+        document.getElementById("no-name").style.display = "block";
+        isValid = false;
+    }
+    if (isNaN(human.height)) {
+        document.getElementById("no-height").style.display = "block";
+        isValid = false;
+    } 
+    if (isNaN(human.weight)) {
+        document.getElementById("no-weight").style.display = "block";
+        isValid = false;  
+    }
+    return isValid;
 }
 
 // Creates a object with 3 comparison methods
@@ -161,7 +179,7 @@ function createRandomNumber() {
 }
 
 // Add tiles to DOM
-function createInfographic(dinos, human, randomNumber) {
+function createInfographic(dinos, human, randomNumber, isValid) {
   const fragment = new DocumentFragment();
 
   for (let i = 0; i < 9; i++) {
@@ -173,7 +191,16 @@ function createInfographic(dinos, human, randomNumber) {
     fragment.appendChild(tile);
   }
   document.getElementById("grid").appendChild(fragment);
-  document.getElementById("grid").style.display = "flex";
+
+  // if form is valid remove form and display grid
+  // otherwise grid is cleared
+  if (isValid) {
+    document.querySelector("form").style.display = "none";
+    document.querySelector(".retry").classList.remove("hide");
+    document.getElementById("grid").style.display = "flex";
+  } else {
+    document.getElementById("grid").innerHTML = "";
+  }
 }
 
 function reset() {
@@ -187,16 +214,24 @@ function reset() {
   document.getElementById("grid").innerHTML = "";
 }
 
+// Removes any form errors
+function hideValidation() {
+  document.getElementById("no-name").style.display = "none";
+  document.getElementById("no-weight").style.display = "none";
+  document.getElementById("no-height").style.display = "none";
+}
+
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
-  //form is removed and retry button appears
-  document.querySelector("form").style.display = "none";
-  document.querySelector(".retry").classList.remove("hide");
+  
+  hideValidation();
 
   const randomNumber = createRandomNumber();
   const humanInfo = getHumanData();
-  createInfographic(dinos, humanInfo, randomNumber);
+
+  const isValid = formValidation(humanInfo);
+  createInfographic(dinos, humanInfo, randomNumber, isValid);
 });
 
 // event listener
