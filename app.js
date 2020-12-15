@@ -62,6 +62,7 @@ function getHumanData() {
   human.height = feet * 12 + inches;
   human.weight = parseFloat(document.getElementById("weight").value);
   human.diet = document.getElementById("diet").value;
+  console.log(human)
   return human;
 }
 
@@ -90,7 +91,7 @@ let dinoMethods = {
     }
   },
   compareDiet: function (humanDiet) {
-    if (this.diet === humanDiet) {
+    if (this.diet === humanDiet.toLowerCase()) {
       return `You have the same diet as a ${this.species}!`;
     } else {
       return `The ${this.species} is a ${this.diet} and you are a ${humanDiet}`;
@@ -173,14 +174,34 @@ function createInfographic(dinos, human, randomNumber) {
     fragment.appendChild(tile);
   }
   document.getElementById("grid").appendChild(fragment);
+  document.getElementById("grid").style.display = "flex"
+}
+
+function reset() {
+    document.getElementById("name").value = ""
+    document.getElementById("feet").value = ""
+    document.getElementById("inches").value = ""
+    document.getElementById("weight").value = ""
+    document.querySelector(".retry").classList.add("hide");
+    document.querySelector("form").style.display = "block";
+    document.getElementById("grid").style.display = "none"
+    document.getElementById("grid").innerHTML = "";
 }
 
 // On button click, prepare and display infographic
-document.getElementById("btn").addEventListener("click", function (e) {
+document.getElementById("btn").addEventListener("click", e => {
   e.preventDefault();
+  //form is removed and retry button appears
   document.querySelector("form").style.display = "none";
   document.querySelector(".retry").classList.remove("hide");
+
   let randomNumber = createRandomNumber();
   let humanInfo = getHumanData();
   createInfographic(dinos, humanInfo, randomNumber);
 });
+
+document.querySelector(".retry").addEventListener("click", e => {
+    e.preventDefault();
+    console.log("click")
+    reset();
+})
