@@ -201,6 +201,7 @@ function createInfographic(dinos, human, randomNumber, isValid) {
   if (isValid) {
     document.querySelector("form").style.display = "none";
     document.querySelector(".retry").classList.remove("hide");
+    document.querySelector(".new-fact").classList.remove("hide");
     document.getElementById("grid").style.display = "flex";
   } else {
     document.getElementById("grid").innerHTML = "";
@@ -214,6 +215,7 @@ function reset() {
   document.getElementById("inches").value = "";
   document.getElementById("weight").value = "";
   document.querySelector(".retry").classList.add("hide");
+  document.querySelector(".new-fact").classList.add("hide");
   document.querySelector("form").style.display = "block";
   document.getElementById("grid").style.display = "none";
   document.getElementById("grid").innerHTML = "";
