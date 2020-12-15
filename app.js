@@ -1,4 +1,4 @@
-//  Dino Constructor
+//  Creates a Dino class
 function Dino(species, weight, height, diet, where, when, fact) {
   this.species = species;
   this.weight = weight;
@@ -39,7 +39,7 @@ window.onload = async function () {
   addHuman();
 };
 
-// Inserts Human
+// Inserts Human placeholder in dino array so all tiles appear on DOM
 function addHuman() {
   dinos.splice(4, 0, ["Human placeholder"]);
 }
@@ -54,20 +54,19 @@ const HumanObj = function (person, height, weight, diet) {
 
 // Function that creates new human object from form data
 function getHumanData() {
-  let human = new HumanObj();
+  const human = new HumanObj();
 
-  let feet = parseFloat(document.getElementById("feet").value);
-  let inches = parseFloat(document.getElementById("inches").value);
+  const feet = parseFloat(document.getElementById("feet").value);
+  const inches = parseFloat(document.getElementById("inches").value);
   human.person = document.getElementById("name").value;
   human.height = feet * 12 + inches;
   human.weight = parseFloat(document.getElementById("weight").value);
   human.diet = document.getElementById("diet").value;
-  console.log(human)
   return human;
 }
 
 // Creates a object with 3 comparison methods
-let dinoMethods = {
+const dinoMethods = {
   compareWeight: function (humanWeight) {
     let weightDifference = this.weight - humanWeight;
     if (weightDifference > 0) {
@@ -167,41 +166,40 @@ function createInfographic(dinos, human, randomNumber) {
 
   for (let i = 0; i < 9; i++) {
     // will always put human in the center
-    let tile =
+    const tile =
       i === 4
         ? generateHumanTile(human)
         : generateDinoTile(dinos[i], human, randomNumber);
     fragment.appendChild(tile);
   }
   document.getElementById("grid").appendChild(fragment);
-  document.getElementById("grid").style.display = "flex"
+  document.getElementById("grid").style.display = "flex";
 }
 
 function reset() {
-    document.getElementById("name").value = ""
-    document.getElementById("feet").value = ""
-    document.getElementById("inches").value = ""
-    document.getElementById("weight").value = ""
-    document.querySelector(".retry").classList.add("hide");
-    document.querySelector("form").style.display = "block";
-    document.getElementById("grid").style.display = "none"
-    document.getElementById("grid").innerHTML = "";
+  document.getElementById("name").value = "";
+  document.getElementById("feet").value = "";
+  document.getElementById("inches").value = "";
+  document.getElementById("weight").value = "";
+  document.querySelector(".retry").classList.add("hide");
+  document.querySelector("form").style.display = "block";
+  document.getElementById("grid").style.display = "none";
+  document.getElementById("grid").innerHTML = "";
 }
 
 // On button click, prepare and display infographic
-document.getElementById("btn").addEventListener("click", e => {
+document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
   //form is removed and retry button appears
   document.querySelector("form").style.display = "none";
   document.querySelector(".retry").classList.remove("hide");
 
-  let randomNumber = createRandomNumber();
-  let humanInfo = getHumanData();
+  const randomNumber = createRandomNumber();
+  const humanInfo = getHumanData();
   createInfographic(dinos, humanInfo, randomNumber);
 });
 
-document.querySelector(".retry").addEventListener("click", e => {
-    e.preventDefault();
-    console.log("click")
-    reset();
-})
+// event listener
+document.querySelector(".retry").addEventListener("click", () => {
+  reset();
+});
