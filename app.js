@@ -9,7 +9,7 @@ function Dino(species, weight, height, diet, where, when, fact) {
   this.fact = fact;
 }
 
-// Grab Dinos from JSON file
+// Grabs Dinos from JSON file
 const getDinoData = async () => {
   const fetchedData = await fetch("./dino.json");
   const data = await fetchedData.json();
@@ -19,7 +19,12 @@ const getDinoData = async () => {
 // Empty array for dino objects
 const dinos = [];
 
-// Create Dino Objects
+// Inserts Human placeholder in dino array so all tiles appear on DOM
+function addHuman() {
+    dinos.splice(4, 0, ["Human placeholder"]);
+  }
+
+// Create Dino Objects and push into dinos array
 window.onload = async function () {
   const dinoArr = await getDinoData();
   dinoArr.forEach((dino) => {
@@ -38,12 +43,7 @@ window.onload = async function () {
   addHuman();
 };
 
-// Inserts Human placeholder in dino array so all tiles appear on DOM
-function addHuman() {
-  dinos.splice(4, 0, ["Human placeholder"]);
-}
-
-// Create Human Object
+// Creates Human Object
 const HumanObj = function (person, height, weight, diet) {
   this.person = person,
   this.height = height,
@@ -64,7 +64,6 @@ function getHumanData() {
   return human;
 }
 
-// Form Validation
 // Displays form errors for each input if not filled out
 function formValidation(human) {
     let isValid = true;
@@ -116,7 +115,7 @@ const dinoMethods = {
   },
 };
 
-// Adds the DinoMethod object with comparison methods as a prototype to the Dino constructor
+// Adds the dinoMethods object with comparison methods as prototype to the Dino class
 Dino.prototype = dinoMethods;
 
 // Generate Tiles for each Dino in Array
@@ -126,6 +125,7 @@ function generateDinoTile(dino, human, randomNumber) {
   if (dino.species === "Pigeon") {
     randomNumber = 3;
   }
+  //  Determines fact to display 
   switch (randomNumber) {
     case 0:
       // display fact about height
@@ -154,6 +154,7 @@ function generateDinoTile(dino, human, randomNumber) {
     default:
       console.log("Dinosaurs!");
   }
+  // Creates new div element with dino name, image, and fact
   const dinoDiv = document.createElement("div");
   dinoDiv.className = "grid-item";
   dinoDiv.innerHTML = `<h3>${
@@ -165,7 +166,7 @@ function generateDinoTile(dino, human, randomNumber) {
   return dinoDiv;
 }
 
-// function created to generate a human div
+// Creates new div element with human name and image
 function generateHumanTile(human) {
   const humanDiv = document.createElement("div");
   humanDiv.className = "grid-item";
@@ -174,25 +175,28 @@ function generateHumanTile(human) {
   return humanDiv;
 }
 
+// Creates random number between 0 and 5
 function createRandomNumber() {
-  return Math.floor(Math.random() * 5);
+  return Math.floor(Math.random() * 6);
 }
 
 // Add tiles to DOM
 function createInfographic(dinos, human, randomNumber, isValid) {
   const fragment = new DocumentFragment();
 
+  // creates a tile for dinos and human and appends to document fragment
   for (let i = 0; i < 9; i++) {
-    // will always put human in the center
     const tile =
+    // makes sure the 4th tile is human so it's in the center
       i === 4
         ? generateHumanTile(human)
         : generateDinoTile(dinos[i], human, randomNumber);
     fragment.appendChild(tile);
   }
+  // appends all tiles to grid
   document.getElementById("grid").appendChild(fragment);
 
-  // if form is valid remove form and display grid
+  // if form passes validation, remove form from view and display infographic
   // otherwise grid is cleared
   if (isValid) {
     document.querySelector("form").style.display = "none";
@@ -203,6 +207,7 @@ function createInfographic(dinos, human, randomNumber, isValid) {
   }
 }
 
+// Hides infographic, displays form, and clears previous form inputs
 function reset() {
   document.getElementById("name").value = "";
   document.getElementById("feet").value = "";
@@ -224,13 +229,12 @@ function hideValidation() {
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
-  
   hideValidation();
 
   const randomNumber = createRandomNumber();
   const humanInfo = getHumanData();
-
   const isValid = formValidation(humanInfo);
+
   createInfographic(dinos, humanInfo, randomNumber, isValid);
 });
 
