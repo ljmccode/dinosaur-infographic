@@ -19,6 +19,35 @@ const getDinoData = async () => {
 // Empty array for dino objects
 const dinos = [];
 
+// Empty array for random numbers
+// Ensure fact generated for one user isn't the same
+let randomNumbers = [];
+
+// Creates random number between 0 and 5
+function createRandomNumber() {
+    if (randomNumbers.length === 5) {
+        outOfFacts();
+    }
+    if (randomNumbers.length === 6) {
+        randomNumbers = [];
+    }
+    let randomNumber;
+    // makes sure number generated isn't in the randomNumber array already
+    while (randomNumber === undefined || randomNumbers.includes(randomNumber)) {
+        randomNumber = Math.floor(Math.random() * 6);
+    }
+    randomNumbers.push(randomNumber);
+    return randomNumber;
+}
+
+// Once user has seen all facts, 
+// user is informed and new fact button disappears  
+function outOfFacts() {
+    document.querySelector(".new-fact").style.display = "none";
+    document.querySelector(".no-facts").classList.remove("hide");
+}
+
+
 // Inserts Human placeholder in dino array so all tiles appear on DOM
 function addHuman() {
     dinos.splice(4, 0, ["Human placeholder"]);
@@ -125,6 +154,7 @@ function generateDinoTile(dino, human, randomNumber) {
   if (dino.species === "Pigeon") {
     randomNumber = 3;
   }
+  console.log("Tile Random: "+ randomNumber);
   //  Determines fact to display 
   switch (randomNumber) {
     case 0:
@@ -148,11 +178,11 @@ function generateDinoTile(dino, human, randomNumber) {
       fact = `${dino.species} lived in ${dino.where}.`;
       break;
     case 5:
-      // display where as fact
-      fact = `${dino.species} lived in the ${dino.where} period.`;
+      // display when as fact
+      fact = `${dino.species} lived in the ${dino.when} period.`;
       break;
-    default:
-      console.log("Dinosaurs!");
+    // default:
+    //   console.log("Dinosaurs!");
   }
   // Creates new div element with dino name, image, and fact
   const dinoDiv = document.createElement("div");
@@ -173,11 +203,6 @@ function generateHumanTile(human) {
   humanDiv.innerHTML = `<h3>${human.person}</h3><img src="images/human.png" alt="human image">`;
 
   return humanDiv;
-}
-
-// Creates random number between 0 and 5
-function createRandomNumber() {
-  return Math.floor(Math.random() * 6);
 }
 
 // Add tiles to DOM
@@ -202,6 +227,7 @@ function createInfographic(dinos, human, randomNumber, isValid) {
     document.querySelector("form").style.display = "none";
     document.querySelector(".retry").classList.remove("hide");
     document.querySelector(".new-fact").classList.remove("hide");
+    document.querySelector(".new-fact").style.display = "inline block";
     document.getElementById("grid").style.display = "flex";
   } else {
     document.getElementById("grid").innerHTML = "";
@@ -216,6 +242,7 @@ function reset() {
   document.getElementById("weight").value = "";
   document.querySelector(".retry").classList.add("hide");
   document.querySelector(".new-fact").classList.add("hide");
+  document.querySelector(".no-facts").classList.add("hide");
   document.querySelector("form").style.display = "block";
   document.getElementById("grid").style.display = "none";
   document.getElementById("grid").innerHTML = "";
@@ -226,21 +253,33 @@ function hideValidation() {
   document.getElementById("no-name").style.display = "none";
   document.getElementById("no-weight").style.display = "none";
   document.getElementById("no-height").style.display = "none";
+  document.querySelector(".new-fact").style.display = "inline-block";
 }
+
+let currentUser;
 
 // On button click, prepare and display infographic
 document.getElementById("btn").addEventListener("click", (e) => {
   e.preventDefault();
   hideValidation();
-
-  const randomNumber = createRandomNumber();
   const humanInfo = getHumanData();
+  currentUser = humanInfo;
+  const randomNumber = createRandomNumber();
   const isValid = formValidation(humanInfo);
 
   createInfographic(dinos, humanInfo, randomNumber, isValid);
 });
 
-// event listener
+// Allows new user to fill out form
 document.querySelector(".retry").addEventListener("click", () => {
   reset();
+  randomNumbers = [];
+});
+
+// display new fact 
+document.querySelector(".new-fact").addEventListener("click", () => {
+    const randomNumber = createRandomNumber();
+    const isValid = true;
+    document.getElementById("grid").innerHTML = "";
+    createInfographic(dinos, currentUser, randomNumber, isValid);
 });
