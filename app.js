@@ -1,4 +1,4 @@
-//  Creates a Dino class
+//  Dino Constructor function
 function Dino(species, weight, height, diet, where, when, fact) {
   this.species = species;
   this.weight = weight;
@@ -154,7 +154,6 @@ function generateDinoTile(dino, human, randomNumber) {
   if (dino.species === "Pigeon") {
     randomNumber = 3;
   }
-  console.log("Tile Random: "+ randomNumber);
   //  Determines fact to display 
   switch (randomNumber) {
     case 0:
@@ -181,9 +180,8 @@ function generateDinoTile(dino, human, randomNumber) {
       // display when as fact
       fact = `${dino.species} lived in the ${dino.when} period.`;
       break;
-    // default:
-    //   console.log("Dinosaurs!");
   }
+  
   // Creates new div element with dino name, image, and fact
   const dinoDiv = document.createElement("div");
   dinoDiv.className = "grid-item";
